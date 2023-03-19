@@ -1,0 +1,50 @@
+entity Customer {
+	name String required,
+    shortDescription String
+}
+
+entity Organization {
+	name String required,
+    environment Long
+}
+
+entity Group {
+	name String required
+}
+
+entity User {
+	name String required
+}
+
+entity Account {
+	name String required
+}
+
+entity GroupComposition {
+	group Long required,
+    account Long required,
+}
+
+relationship ManyToOne {
+	Organization{customer} to Customer
+}
+
+relationship ManyToOne {
+	Group{organization} to Organization
+}
+
+relationship ManyToOne {
+	Account{organization} to Organization
+    Account{user} to User
+}
+
+relationship ManyToOne {
+	User{customer} to Customer
+}
+
+relationship ManyToMany {
+	GroupComposition{account} to Account,
+    GroupComposition{group} to Group
+}
+
+paginate Customer, Organization, User, Group, Account with pagination
